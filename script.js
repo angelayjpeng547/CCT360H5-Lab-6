@@ -25,8 +25,8 @@ function handleSearch(){
         showStatus("Fetching data...");
 
         const geoUrl = `https://open-meteo.com{encodeURIComponent(cityName)}&count=1&language=en&format=json`;
-        const geoResponse = await fetch(geoUrl);
-        const geoData = await geoResponse.json();
+        const geoResponse = fetch(geoUrl);
+        const geoData = geoResponse.json();
 
         if (!geoData.results || geoData.results.length === 0) {
             throw new Error("City location not found.");
@@ -35,8 +35,8 @@ function handleSearch(){
         const { latitude, longitude, name, country } = geoData.results[0];
 
         const weatherUrl = `https://open-meteo.com{latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m`;
-        const weatherResponse = await fetch(weatherUrl);
-        const weatherData = await weatherResponse.json();
+        const weatherResponse = fetch(weatherUrl);
+        const weatherData = weatherResponse.json();
 
         // Step 3: Manipulate DOM and trigger visual adjustments
         updateDOM(name, country || '', weatherData.current);
@@ -45,3 +45,21 @@ function handleSearch(){
         showStatus(error.message || "An unexpected network error occurred.");
         weatherDisplay.classList.add('hidden');
     }
+}
+
+function updateDOM(city, country, weather) {
+    statusMessage.classList.add("hidden");
+    weatherDisplay.classList.remove("hidden");
+
+    locationName.textContent = `${city}, ${country}`;
+    temperatureDisplay.textContent = `${weather.temperature_2m} °C`;
+    conditionDisplay.textContent = `Condition: ${weather.weather_code}`;
+    windDisplay.textContent = `Wind Speed: ${weather.wind_speed_10m} m/s`;
+    humidityDisplay.textContent = `Humidity: ${weather.relative_humidity_2m} %`;
+}
+
+function showStatus(message) {
+    statusMessage.textContent = message;
+    statusMessage.classList.remove("hidden");
+}
+

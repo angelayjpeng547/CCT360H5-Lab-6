@@ -1,0 +1,21 @@
+body{
+    font-family: 'Times New Roman', Times, serif;
+    background-color:pink;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin: 20px;
+    padding: 20px;
+}
+
+h1{
+    color:black;
+    margin: 10px;
+    text-align: center;
+}
+
+p{
+    color:black;
+    margin: 10px;
+    text-align: left; 
+}
