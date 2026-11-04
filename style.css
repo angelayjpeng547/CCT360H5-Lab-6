@@ -25,8 +25,8 @@ p{
     padding: 10px;
     border-radius: 16px;
     width: 100%;
-    max-width: 400px;
-    text-align: left;
+    max-width: 100%;
+    text-align: center;
     transition: transform 0.3s ease;
 }
 
@@ -70,3 +70,4 @@ button:hover{
     color: red;
     margin: 10px 0;
 }
+
