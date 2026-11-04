@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab 6</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+   <div class="weather-card" id="weatherCard">
+        <h1 class="title">Live Weather Tracker</h1>
+        
+        <!-- Search Controls -->
+        <div class="search-container">
+            <input type="text" id="cityInput" placeholder="Enter city name..." aria-label="City Name">
+            <button id="searchBtn">Fetch Live Data</button>
+        </div>
+
+        <!-- Status Messaging -->
+        <div id="statusMessage" class="status-message hidden" role="alert"></div>
+
+        <!-- Dynamic Data Display Container -->
+        <div id="weatherDisplay" class="weather-display hidden">
+            <h2 id="locationName" class="location">---</h2>
+            <div class="metrics">
+                <span id="tempDisplay" class="temperature">--°C</span>
+                <span id="conditionDisplay" class="condition">---</span>
+            </div>
+            <div class="details">
+                <p>Wind Speed: <span id="windDisplay">--</span> km/h</p>
+                <p>Humidity: <span id="humidityDisplay">--</span>%</p>
+            </div>
+        </div>
+    </div>
+ </body>

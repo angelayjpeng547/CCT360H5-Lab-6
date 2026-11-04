@@ -1,0 +1,47 @@
+cityInput = document.getElementById('cityInput');
+searchButton = document.getElementById('searchButton');
+weatherDisplay = document.getElementById('weatherDisplay'); 
+statusMessage = document.getElementById('statusMessage');
+locationName = document.getElementById('locationName');
+temperatureDisplay = document.getElementById('temperatureDisplay');
+conditionDisplay = document.getElementById('conditionDisplay');
+windDisplay = document.getElementById('windDisplay');
+humidityDisplay = document.getElementById('humidityDisplay');
+
+searchButton.addEventListener('click', handleSearch);
+cityInput.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        handleSearch();
+    }
+});
+function handleSearch(){
+    const cityName = cityInput.value.trim();
+    if(cityName === ""){
+        alert("Please enter a city name.");
+        return;
+    }
+
+    try{
+        showStatus("Fetching data...");
+
+        const geoUrl = `https://open-meteo.com{encodeURIComponent(cityName)}&count=1&language=en&format=json`;
+        const geoResponse = await fetch(geoUrl);
+        const geoData = await geoResponse.json();
+
+        if (!geoData.results || geoData.results.length === 0) {
+            throw new Error("City location not found.");
+        }
+
+        const { latitude, longitude, name, country } = geoData.results[0];
+
+        const weatherUrl = `https://open-meteo.com{latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m`;
+        const weatherResponse = await fetch(weatherUrl);
+        const weatherData = await weatherResponse.json();
+
+        // Step 3: Manipulate DOM and trigger visual adjustments
+        updateDOM(name, country || '', weatherData.current);
+
+    } catch (error) {
+        showStatus(error.message || "An unexpected network error occurred.");
+        weatherDisplay.classList.add('hidden');
+    }
