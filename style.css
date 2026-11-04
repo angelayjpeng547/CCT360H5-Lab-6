@@ -19,3 +19,54 @@ p{
     margin: 10px;
     text-align: left; 
 }
+
+.weather-card{
+    background-color:lightpink;
+    padding: 10px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    text-align: left;
+    transition: transform 0.3s ease;
+}
+
+.search-container{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+button{
+    background-color:violet;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color:rgb(249, 235, 255);
+}
+
+.weather-display{
+    animation: fadeIn 1s ease-in-out;
+}
+
+.temperature{
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.condition{
+    font-size: 18px;
+    font-weight: italic;
+    margin: 10px 0;
+}
+
+.status-message{
+    font-size: 16px;
+    color: red;
+    margin: 10px 0;
+}
