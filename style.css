@@ -24,6 +24,7 @@ p{
     background-color:lightpink;
     padding: 10px;
     border-radius: 16px;
+    border:2px solid black;
     width: 100%;
     max-width: 100%;
     text-align: center;
