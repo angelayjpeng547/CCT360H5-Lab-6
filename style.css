@@ -34,6 +34,7 @@ p{
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 button{
@@ -54,7 +55,7 @@ button:hover{
 }
 
 .temperature{
-    font-size: 24px;
+    font-size: 18px;
     font-weight: bold;
     margin: 10px 0;
 }
@@ -70,4 +71,29 @@ button:hover{
     color: red;
     margin: 10px 0;
 }
+
+.details{
+    font-size: 14px;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.metrics{
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.temperature, .condition{
+    margin: 5px 0;
+}
+
+.location{
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+
 

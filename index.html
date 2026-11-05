@@ -9,7 +9,7 @@
   </head>
 
   <body>
-   <div class="weather-card" id="weatherCard">
+   <div class="weather-card">
         <h1 class="title">Live Weather Tracker</h1>
         
         <!-- Search Controls -->
@@ -19,18 +19,18 @@
         </div>
 
         <!-- Status Messaging -->
-        <div id="statusMessage" class="status-message hidden" role="alert"></div>
+        <div id="statusMessage" class="status-message" role="alert"></div>
 
         <!-- Dynamic Data Display Container -->
-        <div id="weatherDisplay" class="weather-display hidden">
+        <div id="weatherDisplay" class="weather-display">
             <h2 id="locationName" class="location">---</h2>
             <div class="metrics">
-                <span id="temperatureDisplay" class="temperature">--°C</span>
-                <span id="conditionDisplay" class="condition">---</span>
+                <div id="temperatureDisplay" class="temperature">--°C</div>
+                <div id="conditionDisplay" class="condition">---</div>
             </div>
             <div class="details">
-                <p>Wind Speed: <span id="windDisplay">--</span> km/h</p>
-                <p>Humidity: <span id="humidityDisplay">--</span>%</p>
+                <p><div id="windDisplay">--</div> </p>
+                <p><div id="humidityDisplay">--</div></p>
             </div>
 
         </div>

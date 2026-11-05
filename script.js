@@ -14,56 +14,62 @@ cityInput.addEventListener('keypress', function(event) {
         handleSearch();
     }
 });
-async function handleSearch(){
+
+function handleSearch(){
     const cityName = cityInput.value.trim();
     if(cityName === ""){
         alert("Please enter a city name.");
         return;
     }
+    showStatus("Fetching weather data...");
 
-    try{
-        showStatus("Fetching data...");
+    const geoURL = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}&count=1&language=en&format=json`;
 
-        const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityName)}&count=1&language=en&format=json`;
-        const geoResponse = await fetch(geoUrl);
-        const geoData = await geoResponse.json();
+    fetch(geoURL)
+        .then((response) => response.json())
+        .then((geoData) => {
 
-        if (!geoData.results || geoData.results.length === 0) {
-            throw new Error("City location not found.");
-        }
+            if (!geoData.results || geoData.results.length === 0) {
+                throw new Error("City location not found.");
+            }
 
-        const { latitude, longitude, name, country } = geoData.results[0];
+            const { latitude, longitude, name, country } = geoData.results[0];
 
-        const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m`;
-        const weatherResponse = await fetch(weatherUrl);
+            const weatherURL = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m`;
 
-        if (!weatherResponse.ok) {
-            throw new Error("Weather data not found.");
-        }
-        const weatherData = weatherResponse.json();
+            return fetch(weatherURL)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Weather data not found.");
+                    }
+                    return response.json();
+                })
+                .then((weatherData) => {
 
-        if (!weatherData || !weatherData.current) {
-            throw new Error("Weather data is incomplete.");
-        }
+                    if (!weatherData.current) {
+                        throw new Error("Weather data is incomplete.");
+                    }
+            updateDOM(name, country || '', weatherData.current);
 
-        // Step 3: Manipulate DOM and trigger visual adjustments
-        updateDOM(name, country || '', weatherData.current);
+                });
+        })
+        .catch((error) => {
+            showStatus(error.message || "An unexpected network error occurred.");
+            weatherDisplay.classList.add('hidden');
+        });
 
-    } catch (error) {
-        showStatus(error.message || "An unexpected network error occurred.");
-        weatherDisplay.classList.add('hidden');
-    }
 }
 
 function updateDOM(city, country, weather) {
     statusMessage.classList.add("hidden");
     weatherDisplay.classList.remove("hidden");
 
-    locationName.textContent = `${city}, ${country}`;
-    temperatureDisplay.textContent = `${weather.temperature_2m} °C`;
+    locationName.textContent = `Current Location: ${city}, ${country}`;
+    temperatureDisplay.textContent = `Current temperature: ${weather.temperature_2m} °C`;
     conditionDisplay.textContent = `Condition: ${weather.weather_code}`;
     windDisplay.textContent = `Wind Speed: ${weather.wind_speed_10m} m/s`;
     humidityDisplay.textContent = `Humidity: ${weather.relative_humidity_2m} %`;
+    statusMessage.textContent = "Location and weather data fetched successfully.";
 }
 
 function showStatus(message) {
